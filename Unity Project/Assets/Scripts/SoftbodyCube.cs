@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SoftbodyCube : MonoBehaviour
@@ -82,7 +83,7 @@ public class SoftbodyCube : MonoBehaviour
         GameObject thisCube = this.gameObject;
         Vector3 vertexOne = this.transform.GetChild(0).localPosition;
         Vector3 vertexTwo = this.transform.GetChild(7).localPosition;
-        Vector3 vertexMidpoint = (vertexOne + vertexTwo) / 2;
+        Vector3 vertexMidpoint = new Vector3(0, System.MathF.Round((vertexOne.y + vertexTwo.y) / 2, 2), System.MathF.Round((vertexOne.z + vertexTwo.z) / 2, 2));
 
         SphereCollider thisCubeSensor = thisCube.AddComponent<SphereCollider>();
         thisCubeSensor.radius = _sensorColliderSize;

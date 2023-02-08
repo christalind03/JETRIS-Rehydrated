@@ -26,10 +26,10 @@ public class SoftbodyTetromino : MonoBehaviour
                 if(cube != cubeSibling)
                 {
                     GameObject cubeObject = cube.gameObject;
-                    SphereCollider cubeSensor = cubeObject.GetComponent<SphereCollider>();
-
                     GameObject cubeSiblingObject = cubeSibling.gameObject;
-                    SphereCollider cubeSiblingSensor = cubeSiblingObject.GetComponent<SphereCollider>();
+
+                    SphereCollider cubeSensor = cubeObject.GetComponent<SphereCollider>();
+                    SphereCollider cubeSiblingSensor = cubeSibling.GetComponent<SphereCollider>();
 
                     bool hasSameY = cubeSensor.center.y == cubeSiblingSensor.center.y;
                     bool hasSameZ = cubeSensor.center.z == cubeSiblingSensor.center.z;
@@ -38,7 +38,7 @@ public class SoftbodyTetromino : MonoBehaviour
                     {
                         SpringJoint cubeSpring = cubeObject.AddComponent<SpringJoint>();
 
-                        cubeSpring.connectedBody = cubeSiblingObject.GetComponent<Rigidbody>();
+                        cubeSpring.connectedBody = cubeSibling.GetComponent<Rigidbody>();
                         cubeSpring.spring = _springStrength;
                         cubeSpring.damper = _damperStrength;
                     }
