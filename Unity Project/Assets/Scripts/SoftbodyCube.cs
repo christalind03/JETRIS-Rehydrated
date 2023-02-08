@@ -2,54 +2,57 @@ using UnityEngine;
 
 public class SoftbodyCube : MonoBehaviour
 {
-    [Header("Collider Settings")]
-    [SerializeField] [Tooltip("Collider size of each vertex")] private float _colliderSize = 0.01f;
+    // RIGIDBODY SETTINGS
+    private RigidbodyConstraints _rigidbodyConstraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+    private CollisionDetectionMode _rigidbodyCollisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-    [Header("Spring Settings")]
-    [SerializeField] [Tooltip("Higher the value, the tighter the spring")] private float _springStrength = 100f;
-    [SerializeField] [Tooltip("Higher the value, the faster the spring oscillates")] private float _damperStrength = 0.05f;
+    // COLLIDER SETTINGS
+    private float _vertexColliderSize = 0.01f;
+    private float _sensorColliderSize = 0.015f;
 
-    void Start()
+    // SPRING SETTINGS
+    private float _springStrength = 100f;
+    private float _damperStrength = 0.05f;
+
+    void Awake()
     {
-        AddRigidbodies();
-        AddColliders();
-        AddSpringJoints();
+        AddVertexRigidbodies();
+        AddVertexColliders();
+        AddVertexSpringJoints();
+
+        AddSensorRigidbody();
+        AddSensorCollider();
+        AddSensorSpringJoints();
     }
 
-    private void AddRigidbodies()
+    private void AddVertexRigidbodies()
     {
-        Transform vertexParent = transform.GetChild(0);
-
-        foreach(Transform vertex in vertexParent)
+        foreach(Transform vertex in this.transform)
         {
             GameObject vertexObject = vertex.gameObject;
             Rigidbody vertexRigidbody = vertexObject.AddComponent<Rigidbody>();
 
-            vertexRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-            vertexRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            vertexRigidbody.constraints = _rigidbodyConstraints;
+            vertexRigidbody.collisionDetectionMode = _rigidbodyCollisionDetectionMode;
         }
     }
 
-    private void AddColliders()
+    private void AddVertexColliders()
     {
-        Transform vertexParent = transform.GetChild(0);
-
-        foreach(Transform vertex in vertexParent)
+        foreach(Transform vertex in this.transform)
         {
             GameObject vertexObject = vertex.gameObject;
             BoxCollider vertexCollider = vertexObject.AddComponent<BoxCollider>();
 
-            vertexCollider.size = new Vector3(_colliderSize, _colliderSize, _colliderSize);
+            vertexCollider.size = new Vector3(_vertexColliderSize, _vertexColliderSize, _vertexColliderSize);
         }
     }
 
-    private void AddSpringJoints()
+    private void AddVertexSpringJoints()
     {
-        Transform vertexParent = transform.GetChild(0);
-
-        foreach(Transform vertex in vertexParent)
+        foreach(Transform vertex in this.transform)
         {
-            foreach(Transform vertexSibling in vertexParent)
+            foreach(Transform vertexSibling in this.transform)
             {
                 if(vertex != vertexSibling)
                 {
@@ -62,6 +65,42 @@ public class SoftbodyCube : MonoBehaviour
                     vertexSpring.damper = _damperStrength;
                 }
             }
+        }
+    }
+
+    private void AddSensorRigidbody()
+    {
+        GameObject thisCube = this.gameObject;
+
+        Rigidbody thisCubeRigidbody = thisCube.AddComponent<Rigidbody>();
+        thisCubeRigidbody.constraints = _rigidbodyConstraints;
+        thisCubeRigidbody.collisionDetectionMode = _rigidbodyCollisionDetectionMode;
+    }
+
+    private void AddSensorCollider()
+    {
+        GameObject thisCube = this.gameObject;
+        Vector3 vertexOne = this.transform.GetChild(0).localPosition;
+        Vector3 vertexTwo = this.transform.GetChild(7).localPosition;
+        Vector3 vertexMidpoint = (vertexOne + vertexTwo) / 2;
+
+        SphereCollider thisCubeSensor = thisCube.AddComponent<SphereCollider>();
+        thisCubeSensor.radius = _sensorColliderSize;
+        thisCubeSensor.center = vertexMidpoint;
+    }
+
+    private void AddSensorSpringJoints()
+    {
+        GameObject thisCube = this.gameObject;
+
+        foreach(Transform vertex in this.transform)
+        {
+            GameObject vertexObject = vertex.gameObject;
+            SpringJoint thisCubeSpring = thisCube.AddComponent<SpringJoint>();
+
+            thisCubeSpring.connectedBody = vertexObject.GetComponent<Rigidbody>();
+            thisCubeSpring.spring = _springStrength;
+            thisCubeSpring.damper = _damperStrength;
         }
     }
 }
