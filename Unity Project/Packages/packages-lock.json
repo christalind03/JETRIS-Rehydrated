@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.singularitygroup.hotreload": {
+      "version": "git+https://gitlab.com/singularitygroup/hot-reload-for-unity.git#1.1.9",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "03c7f011bf7f64511270313a0296b7bad6b2b3d4"
+    },
     "com.unity.burst": {
       "version": "1.8.2",
       "depth": 1,
