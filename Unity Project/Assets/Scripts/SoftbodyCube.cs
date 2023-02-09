@@ -4,16 +4,17 @@ using UnityEngine;
 public class SoftbodyCube : MonoBehaviour
 {
     // RIGIDBODY SETTINGS
+    private float _rigidbodyMass = 0.0625f;
     private RigidbodyConstraints _rigidbodyConstraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
     private CollisionDetectionMode _rigidbodyCollisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
     // COLLIDER SETTINGS
-    private float _vertexColliderSize = 0.01f;
+    private float _vertexColliderSize = 0.0095f;
     private float _sensorColliderSize = 0.015f;
 
     // SPRING SETTINGS
-    private float _springStrength = 100f;
-    private float _damperStrength = 0.05f;
+    private float _springStrength = 45f;
+    private float _damperStrength = 0.25f;
 
     void Awake()
     {
@@ -33,6 +34,7 @@ public class SoftbodyCube : MonoBehaviour
             GameObject vertexObject = vertex.gameObject;
             Rigidbody vertexRigidbody = vertexObject.AddComponent<Rigidbody>();
 
+            vertexRigidbody.mass = _rigidbodyMass;
             vertexRigidbody.constraints = _rigidbodyConstraints;
             vertexRigidbody.collisionDetectionMode = _rigidbodyCollisionDetectionMode;
         }
@@ -72,8 +74,9 @@ public class SoftbodyCube : MonoBehaviour
     private void AddSensorRigidbody()
     {
         GameObject thisCube = this.gameObject;
-
         Rigidbody thisCubeRigidbody = thisCube.AddComponent<Rigidbody>();
+
+        thisCubeRigidbody.mass = _rigidbodyMass;
         thisCubeRigidbody.constraints = _rigidbodyConstraints;
         thisCubeRigidbody.collisionDetectionMode = _rigidbodyCollisionDetectionMode;
     }
