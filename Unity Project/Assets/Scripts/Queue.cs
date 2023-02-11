@@ -67,7 +67,7 @@ public class Queue : MonoBehaviour
             
             if(_currentPiece.name == "Hero(Clone)")
             {
-                _currentPiece.transform.position = new Vector3(0f, 22f, 0f);
+                _currentPiece.transform.position = new Vector3(0f, 20f, 0f);
             }
             else if(_currentPiece.name != "Zero(Clone)" && _currentPiece.name != "Hero(Clone)")
             {
