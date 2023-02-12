@@ -8,14 +8,21 @@ public class Queue : MonoBehaviour
     private int _generationSeed = DateTime.Now.Millisecond;
     private int[] _allTetrominoes = new int[]{1, 2, 3, 4, 5, 6, 7};
 
-    private int objectToSpawn = 0;
+    private int _objectToSpawn = 0;
+    private bool _holdActivated = false;
     private List<int> _currentBag = new List<int>();
 
+    [SerializeField]
     private GameObject _playablePiece = null;
+    [SerializeField]
     private GameObject _queuedPiece1 = null;
+    [SerializeField]
     private GameObject _queuedPiece2 = null;
+    [SerializeField]
     private GameObject _queuedPiece3 = null;
+    [SerializeField]
     private GameObject _queuedPiece4 = null;
+    [SerializeField]
     private GameObject _holdPiece = null;
 
     void Awake()
@@ -42,18 +49,44 @@ public class Queue : MonoBehaviour
             _currentBag.AddRange(_allTetrominoes);
         }
 
-        objectToSpawn = _currentBag[0];
+        _objectToSpawn = _currentBag[0];
         _currentBag.RemoveAt(0);
-        UpdateQueueObject();
-        UpdateQueueTransform();
+        UpdateObjects();
+        UpdateTransforms();
     }
 
-    private void UpdateQueueObject()
+    public void UpdateHold()
+    {
+        if(!_holdActivated)
+        {
+            if(_holdPiece == null)
+            {
+                _holdPiece = _playablePiece;
+                _playablePiece = null;
+                UpdateQueue();
+            }
+            else
+            {
+                // Swapping the current piece and the hold piece
+                GameObject tempObject = _holdPiece;
+                _holdPiece = _playablePiece;
+                _playablePiece = tempObject;
+
+                UpdateTransforms();
+            }
+
+            _holdActivated = true;
+        }
+    }
+
+    private void UpdateObjects()
     {
         if(_playablePiece != null)
         {
+            // Drops the current piece the player has
             GameObject playablePieceCubes = _playablePiece.transform.GetChild(0).gameObject;
             playablePieceCubes.AddComponent<SoftbodyTetromino>();
+            _holdActivated = false;
         }
 
         _playablePiece = _queuedPiece1;
@@ -63,7 +96,7 @@ public class Queue : MonoBehaviour
         _queuedPiece4 = Spawn();
     }
 
-    private void UpdateQueueTransform()
+    private void UpdateTransforms()
     {
         if(_playablePiece != null)
         {
@@ -92,13 +125,19 @@ public class Queue : MonoBehaviour
             _queuedPiece4.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             _queuedPiece4.transform.position = new Vector3(9.5f, 9.5f, -1f);
         }
+
+        if(_holdPiece != null)
+        {
+            _holdPiece.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            _holdPiece.transform.position = new Vector3(-9.5f, 18.5f, -1f);
+        }
     }
 
     private GameObject Spawn()
     {
         string targetPath = "Prefabs/";
 
-        switch(objectToSpawn)
+        switch(_objectToSpawn)
         {
             case 1:
                 targetPath += "Hero";

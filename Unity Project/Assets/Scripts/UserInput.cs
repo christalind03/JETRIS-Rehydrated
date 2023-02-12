@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private PlayerControls _playerControls;
-    private GameObject _playablePiece;
     private Queue _gameQueue;
+
+    private GameObject _playablePiece;
 
     void Awake()
     {
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void Hold(InputAction.CallbackContext context)
     {
-        Debug.Log("Holding Tetromino...");
+        _gameQueue.UpdateHold();
     }
 
     void OnDisable()
