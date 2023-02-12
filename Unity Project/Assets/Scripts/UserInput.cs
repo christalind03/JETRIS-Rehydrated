@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void SoftDrop(InputAction.CallbackContext context)
     {
-        Debug.Log("Moving down...");
+        _playablePiece.transform.position += new Vector3(0f, -1f, 0f);
     }
 
     private void Rotate(InputAction.CallbackContext context)
