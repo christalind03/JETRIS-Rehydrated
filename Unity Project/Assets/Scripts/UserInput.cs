@@ -52,12 +52,6 @@ public class PlayerController : MonoBehaviour
 
     private void Rotate(InputAction.CallbackContext context)
     {
-        // float xRotation = _playablePiece.transform.localRotation.x + 90;
-        // float yRotation = _playablePiece.transform.localRotation.y;
-        // float zRotation = _playablePiece.transform.localRotation.z;
-
-        // _playablePiece.transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
-
         _playablePiece.transform.RotateAround(_playablePiece.transform.position, Vector3.back, 90f);
     }
 
