@@ -11,7 +11,7 @@ public class Queue : MonoBehaviour
     private int objectToSpawn = 0;
     private List<int> _currentBag = new List<int>();
 
-    private GameObject _currentPiece = null;
+    private GameObject _playablePiece = null;
     private GameObject _queuedPiece1 = null;
     private GameObject _queuedPiece2 = null;
     private GameObject _queuedPiece3 = null;
@@ -27,8 +27,13 @@ public class Queue : MonoBehaviour
             UpdateQueue();
         }
     }
+
+    public GameObject GetPlayablePiece()
+    {
+        return _playablePiece;
+    }
     
-    private void UpdateQueue()
+    public void UpdateQueue()
     {
         if(_currentBag.Count == 0)
         {
@@ -45,13 +50,13 @@ public class Queue : MonoBehaviour
 
     private void UpdateQueueObjects()
     {
-        if(_currentPiece != null)
+        if(_playablePiece != null)
         {
             // Enable gravity here
-            Debug.Log("Dropped " + _currentPiece.name);
+            Debug.Log("Dropped " + _playablePiece.name);
         }
 
-        _currentPiece = _queuedPiece1;
+        _playablePiece = _queuedPiece1;
         _queuedPiece1 = _queuedPiece2;
         _queuedPiece2 = _queuedPiece3;
         _queuedPiece3 = _queuedPiece4;
@@ -60,18 +65,19 @@ public class Queue : MonoBehaviour
 
     private void UpdateQueueTransform()
     {
-        if(_currentPiece != null)
+        if(_playablePiece != null)
         {
-            _currentPiece.transform.localScale = new Vector3(1f, 1f, 1f);
-            _currentPiece.transform.position = new Vector3(0f, 21f, 0f);
+            _playablePiece.transform.localScale = new Vector3(1f, 1f, 1f);
+            _playablePiece.transform.position = new Vector3(0f, 21f, 0f);
             
-            if(_currentPiece.name == "Hero(Clone)")
+            // Adjusting the position to be within the grid's boundaries
+            if(_playablePiece.name == "Hero(Clone)")
             {
-                _currentPiece.transform.position = new Vector3(0f, 20f, 0f);
+                _playablePiece.transform.position = new Vector3(0f, 20f, 0f);
             }
-            else if(_currentPiece.name != "Zero(Clone)" && _currentPiece.name != "Hero(Clone)")
+            else if(_playablePiece.name != "Zero(Clone)" && _playablePiece.name != "Hero(Clone)")
             {
-                _currentPiece.transform.position = new Vector3(-0.5f, 20.5f, 0f);
+                _playablePiece.transform.position = new Vector3(-0.5f, 20.5f, 0f);
             }
 
             _queuedPiece1.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);

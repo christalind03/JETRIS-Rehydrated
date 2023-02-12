@@ -1,8 +1,8 @@
 {
-    "name": "UserInput",
+    "name": "PlayerControls",
     "maps": [
         {
-            "name": "UserInput",
+            "name": "Game",
             "id": "af8de3f0-21ef-4740-9994-430eeb3932c6",
             "actions": [
                 {
