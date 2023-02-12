@@ -44,16 +44,16 @@ public class Queue : MonoBehaviour
 
         objectToSpawn = _currentBag[0];
         _currentBag.RemoveAt(0);
-        UpdateQueueObjects();
+        UpdateQueueObject();
         UpdateQueueTransform();
     }
 
-    private void UpdateQueueObjects()
+    private void UpdateQueueObject()
     {
         if(_playablePiece != null)
         {
-            // Enable gravity here
-            Debug.Log("Dropped " + _playablePiece.name);
+            GameObject playablePieceCubes = _playablePiece.transform.GetChild(0).gameObject;
+            playablePieceCubes.AddComponent<SoftbodyTetromino>();
         }
 
         _playablePiece = _queuedPiece1;

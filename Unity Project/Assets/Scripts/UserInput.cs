@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     private void HardDrop(InputAction.CallbackContext context)
     {
-        Debug.Log("Dropping Tetromino...");
+        _gameQueue.UpdateQueue();
     }
 
     private void SoftDrop(InputAction.CallbackContext context)
