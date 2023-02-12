@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     private void MoveRight(InputAction.CallbackContext context)
     {
-        _playablePiece.transform.position -= new Vector3(-1f, 0f, 0f);
+        _playablePiece.transform.position += new Vector3(1f, 0f, 0f);
     }
 
     private void HardDrop(InputAction.CallbackContext context)
@@ -52,7 +52,13 @@ public class PlayerController : MonoBehaviour
 
     private void Rotate(InputAction.CallbackContext context)
     {
-        Debug.Log("Rotating Tetromino...");
+        // float xRotation = _playablePiece.transform.localRotation.x + 90;
+        // float yRotation = _playablePiece.transform.localRotation.y;
+        // float zRotation = _playablePiece.transform.localRotation.z;
+
+        // _playablePiece.transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
+
+        _playablePiece.transform.RotateAround(_playablePiece.transform.position, Vector3.back, 90f);
     }
 
     private void Hold(InputAction.CallbackContext context)

@@ -68,16 +68,16 @@ public class Queue : MonoBehaviour
         if(_playablePiece != null)
         {
             _playablePiece.transform.localScale = new Vector3(1f, 1f, 1f);
-            _playablePiece.transform.position = new Vector3(0f, 21f, 0f);
+            _playablePiece.transform.position = new Vector3(0f, 22f, 0f);
             
             // Adjusting the position to be within the grid's boundaries
             if(_playablePiece.name == "Hero(Clone)")
             {
-                _playablePiece.transform.position = new Vector3(0f, 20f, 0f);
+                _playablePiece.transform.position = new Vector3(0f, 21f, 0f);
             }
             else if(_playablePiece.name != "Zero(Clone)" && _playablePiece.name != "Hero(Clone)")
             {
-                _playablePiece.transform.position = new Vector3(-0.5f, 20.5f, 0f);
+                _playablePiece.transform.position = new Vector3(-0.5f, 21.5f, 0f);
             }
 
             _queuedPiece1.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
