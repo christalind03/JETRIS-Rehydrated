@@ -128,6 +128,7 @@ public class Queue : MonoBehaviour
 
         if(_holdPiece != null)
         {
+            _holdPiece.transform.eulerAngles = new Vector3(0f, 90f, 0f);
             _holdPiece.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             _holdPiece.transform.position = new Vector3(-9.5f, 18.5f, -1f);
         }
