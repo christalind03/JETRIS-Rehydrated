@@ -8,21 +8,14 @@ public class Queue : MonoBehaviour
     private int _generationSeed = DateTime.Now.Millisecond;
     private int[] _allTetrominoes = new int[]{1, 2, 3, 4, 5, 6, 7};
 
-    private int _objectToSpawn = 0;
     private bool _holdActivated = false;
     private List<int> _currentBag = new List<int>();
 
-    [SerializeField]
     private GameObject _playablePiece = null;
-    [SerializeField]
     private GameObject _queuedPiece1 = null;
-    [SerializeField]
     private GameObject _queuedPiece2 = null;
-    [SerializeField]
     private GameObject _queuedPiece3 = null;
-    [SerializeField]
     private GameObject _queuedPiece4 = null;
-    [SerializeField]
     private GameObject _holdPiece = null;
 
     void Awake()
@@ -49,9 +42,9 @@ public class Queue : MonoBehaviour
             _currentBag.AddRange(_allTetrominoes);
         }
 
-        _objectToSpawn = _currentBag[0];
+        int objectToSpawn = _currentBag[0];
         _currentBag.RemoveAt(0);
-        UpdateObjects();
+        UpdateObjects(objectToSpawn);
         UpdateTransforms();
     }
 
@@ -79,7 +72,7 @@ public class Queue : MonoBehaviour
         }
     }
 
-    private void UpdateObjects()
+    private void UpdateObjects(int objectToSpawn)
     {
         if(_playablePiece != null)
         {
@@ -93,7 +86,7 @@ public class Queue : MonoBehaviour
         _queuedPiece1 = _queuedPiece2;
         _queuedPiece2 = _queuedPiece3;
         _queuedPiece3 = _queuedPiece4;
-        _queuedPiece4 = Spawn();
+        _queuedPiece4 = Spawn(objectToSpawn);
     }
 
     private void UpdateTransforms()
@@ -101,10 +94,13 @@ public class Queue : MonoBehaviour
         if(_playablePiece != null)
         {
             _playablePiece.transform.localScale = new Vector3(1f, 1f, 1f);
-            _playablePiece.transform.position = new Vector3(0f, 22f, 0f);
-            
-            // Adjusting the position to be within the grid's boundaries
-            if(_playablePiece.name == "Hero(Clone)")
+
+            // Adjusting the playable piece position based on its block type
+            if(_playablePiece.name == "Zero(Clone)")
+            {
+                _playablePiece.transform.position = new Vector3(0f, 22f, 0f);
+            }
+            else if(_playablePiece.name == "Hero(Clone)")
             {
                 _playablePiece.transform.position = new Vector3(0f, 21f, 0f);
             }
@@ -113,32 +109,47 @@ public class Queue : MonoBehaviour
                 _playablePiece.transform.position = new Vector3(-0.5f, 21.5f, 0f);
             }
 
-            _queuedPiece1.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             _queuedPiece1.transform.position = new Vector3(9.5f, 18.5f, -1f);
-
-            _queuedPiece2.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             _queuedPiece2.transform.position = new Vector3(9.5f, 15.5f, -1f);
-
-            _queuedPiece3.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             _queuedPiece3.transform.position = new Vector3(9.5f, 12.5f, -1f);
-
-            _queuedPiece4.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             _queuedPiece4.transform.position = new Vector3(9.5f, 9.5f, -1f);
+
+            // Adjusting the queued piece scale and positions based on its block type
+            GameObject[] queuedPieces = {_queuedPiece1, _queuedPiece2, _queuedPiece3, _queuedPiece4};
+
+            foreach(GameObject queuedPiece in queuedPieces)
+            {
+                queuedPiece.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                if(queuedPiece != null && queuedPiece.name != "Zero(Clone)")
+                {
+                    queuedPiece.transform.position += new Vector3(0f, -0.25f, 0f);
+                }
+            }
         }
 
         if(_holdPiece != null)
         {
             _holdPiece.transform.eulerAngles = new Vector3(0f, 90f, 0f);
             _holdPiece.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            _holdPiece.transform.position = new Vector3(-9.5f, 18.5f, -1f);
+
+            // Adjusting the playable piece position based on its block type
+            if(_holdPiece.name == "Zero(Clone)")
+            {
+                _holdPiece.transform.position = new Vector3(-9.5f, 18.5f, -1f);
+            }
+            else
+            {
+                _holdPiece.transform.position = new Vector3(-9.5f, 18.25f, -1f);
+            }
         }
     }
 
-    private GameObject Spawn()
+    private GameObject Spawn(int objectToSpawn)
     {
         string targetPath = "Prefabs/";
 
-        switch(_objectToSpawn)
+        switch(objectToSpawn)
         {
             case 1:
                 targetPath += "Hero";
