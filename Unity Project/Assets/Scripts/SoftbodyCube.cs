@@ -9,7 +9,7 @@ public class SoftbodyCube : MonoBehaviour
     private CollisionDetectionMode _rigidbodyCollisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
     // COLLIDER SETTINGS
-    private float _vertexColliderSize = 0.0095f;
+    private float _vertexColliderSize = 0.0085f;
     private float _sensorColliderSize = 0.015f;
 
     // SPRING SETTINGS

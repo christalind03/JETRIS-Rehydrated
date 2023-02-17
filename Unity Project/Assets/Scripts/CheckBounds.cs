@@ -4,7 +4,12 @@ using System.Collections;
 public class CheckBounds : MonoBehaviour
 {
     private bool _isColliding = false;
-    private int _previousInstanceID = 0;
+    private Queue _gameQueue;
+
+    void Awake()
+    {
+        _gameQueue = GameObject.FindWithTag("Game Master").GetComponent<Queue>();
+    }
 
     void OnTriggerEnter(Collider otherCollider)
     {
@@ -18,7 +23,6 @@ public class CheckBounds : MonoBehaviour
 
             Transform thisObject = this.transform.root;
             Transform otherObject = otherCollider.transform.root;
-            int currentInstanceID = otherObject.gameObject.GetInstanceID();
             Vector3 collisionPoint = otherCollider.ClosestPoint(transform.position);
 
             if(otherCollider.name == "Grid Pillars")
@@ -33,11 +37,15 @@ public class CheckBounds : MonoBehaviour
                 }
             }
 
-            if(otherObject.tag == "Tetromino" && currentInstanceID != _previousInstanceID)
+            if(otherObject.tag == "Tetromino" && collisionPoint.y <= 20f)
             {
                 thisObject.position += Vector3.up;
-                _previousInstanceID = currentInstanceID;
-                Debug.Log("Dropping this object");
+                _gameQueue.UpdateQueue();
+            }
+            
+            if(otherCollider.name == "Grid Floor")
+            {
+                _gameQueue.UpdateQueue();
             }
 
             StartCoroutine(ResetCollision());

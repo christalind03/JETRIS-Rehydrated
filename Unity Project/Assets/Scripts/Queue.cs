@@ -81,6 +81,8 @@ public class Queue : MonoBehaviour
             GameObject renderedMesh = _playablePiece.transform.GetChild(1).gameObject;
             renderedMesh.GetComponent<Rigidbody>().useGravity = true;
 
+            // Destroying now useless components
+            Destroy(renderedMesh.GetComponent<CheckBounds>());
             foreach(BoxCollider collider in renderedMesh.GetComponents<BoxCollider>())
             {
                 Destroy(collider);
@@ -92,8 +94,6 @@ public class Queue : MonoBehaviour
             // Creating a fixed joint to make the mesh collider follow the rendered mesh using the rigidbodies connected to the softbody cubes
             // This is important for mesh slicing when clearing lines
             FixedJoint renderedMeshJoint = renderedMesh.AddComponent<FixedJoint>();
-            Debug.Log(_playablePiece.transform.GetChild(0).GetChild(0).name);
-            Debug.Log(_playablePiece.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Rigidbody>());
             renderedMeshJoint.connectedBody = _playablePiece.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Rigidbody>();
 
             _holdActivated = false;
@@ -182,7 +182,7 @@ public class Queue : MonoBehaviour
                 break;
 
             case 4:
-                targetPath += "Zero";
+                targetPath += "Red Skew";
                 break;
 
             case 5:

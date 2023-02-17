@@ -812,7 +812,7 @@ GameObject:
   - component: {fileID: 1191459427}
   m_Layer: 0
   m_Name: Game Master
-  m_TagString: Untagged
+  m_TagString: Game Master
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1383,8 +1383,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &4409506683716683398
-MeshCollider:
+--- !u!65 &4409506683716683398
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1393,10 +1393,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4449041852271741652, guid: 5a3e9859cdbdef7428ecdf85e7294f14, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.030000007, y: 0.12, z: 0.004999999}
+  m_Center: {x: 0.0050000004, y: 0.04999999, z: -0.0074999984}
 --- !u!4 &7173141588278087795
 Transform:
   m_ObjectHideFlags: 0
