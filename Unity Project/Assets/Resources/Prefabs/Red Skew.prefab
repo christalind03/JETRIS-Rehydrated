@@ -765,6 +765,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1831183050795573222}
   - component: {fileID: 6792216760000882422}
+  - component: {fileID: 1606537344590489763}
+  - component: {fileID: 4390014612096139322}
+  - component: {fileID: 9007891781839653790}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -872,6 +875,48 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.06999999, y: 0.045000024, z: -0.01999999}
     m_Extent: {x: 0.07500002, y: 0.05000002, z: 0.025000012}
   m_DirtyAABB: 0
+--- !u!54 &1606537344590489763
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386581432934895884}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
+--- !u!64 &4390014612096139322
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386581432934895884}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 7c83b0e3101edba4bb491a22e11ad465, type: 3}
+--- !u!114 &9007891781839653790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386581432934895884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9066b6fe3c54d9145b5fb1f1de1223d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2624940529118066334
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,7 +1023,7 @@ GameObject:
   - component: {fileID: 3249362362488046723}
   m_Layer: 0
   m_Name: Red Skew
-  m_TagString: Untagged
+  m_TagString: Tetromino
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

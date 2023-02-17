@@ -44,6 +44,7 @@ public class Queue : MonoBehaviour
 
         int objectToSpawn = _currentBag[0];
         _currentBag.RemoveAt(0);
+        
         UpdateObjects(objectToSpawn);
         UpdateTransforms();
     }
@@ -74,14 +75,30 @@ public class Queue : MonoBehaviour
 
     private void UpdateObjects(int objectToSpawn)
     {
+        // Drops the current piece the player has
         if(_playablePiece != null)
         {
-            // Drops the current piece the player has
+            GameObject renderedMesh = _playablePiece.transform.GetChild(1).gameObject;
+            renderedMesh.GetComponent<Rigidbody>().useGravity = true;
+
+            // Disabling mesh collider components in order to let the softbody fall
+            MeshCollider renderedMeshCollider = renderedMesh.GetComponent<MeshCollider>();
+            renderedMeshCollider.isTrigger = false;
+            renderedMeshCollider.convex = false;
+            renderedMeshCollider.enabled = false;
+
             GameObject playablePieceCubes = _playablePiece.transform.GetChild(0).gameObject;
             playablePieceCubes.AddComponent<SoftbodyTetromino>();
+
+            // Creating a fixed joint to make the mesh collider follow the rendered mesh using the rigidbodies connected to the softbody cubes
+            // This is important for mesh slicing when clearing lines
+            FixedJoint renderedMeshJoint = renderedMesh.AddComponent<FixedJoint>();
+            renderedMeshJoint.connectedBody = _playablePiece.transform.GetChild(0).GetChild(0).GetComponent<Rigidbody>();
+
             _holdActivated = false;
         }
 
+        // Updates the queue
         _playablePiece = _queuedPiece1;
         _queuedPiece1 = _queuedPiece2;
         _queuedPiece2 = _queuedPiece3;
