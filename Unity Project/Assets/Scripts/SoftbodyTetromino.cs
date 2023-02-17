@@ -6,7 +6,7 @@ public class SoftbodyTetromino : MonoBehaviour
     private float _springStrength = 125f;
     private float _damperStrength = 0.125f;
 
-    void Start()
+    void Awake()
     {
         foreach(Transform vertex in this.transform)
         {

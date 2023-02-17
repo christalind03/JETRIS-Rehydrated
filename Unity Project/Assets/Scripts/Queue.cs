@@ -44,7 +44,7 @@ public class Queue : MonoBehaviour
 
         int objectToSpawn = _currentBag[0];
         _currentBag.RemoveAt(0);
-        
+
         UpdateObjects(objectToSpawn);
         UpdateTransforms();
     }
@@ -81,11 +81,10 @@ public class Queue : MonoBehaviour
             GameObject renderedMesh = _playablePiece.transform.GetChild(1).gameObject;
             renderedMesh.GetComponent<Rigidbody>().useGravity = true;
 
-            // Disabling mesh collider components in order to let the softbody fall
-            MeshCollider renderedMeshCollider = renderedMesh.GetComponent<MeshCollider>();
-            renderedMeshCollider.isTrigger = false;
-            renderedMeshCollider.convex = false;
-            renderedMeshCollider.enabled = false;
+            foreach(BoxCollider collider in renderedMesh.GetComponents<BoxCollider>())
+            {
+                Destroy(collider);
+            }
 
             GameObject playablePieceCubes = _playablePiece.transform.GetChild(0).gameObject;
             playablePieceCubes.AddComponent<SoftbodyTetromino>();
@@ -93,7 +92,9 @@ public class Queue : MonoBehaviour
             // Creating a fixed joint to make the mesh collider follow the rendered mesh using the rigidbodies connected to the softbody cubes
             // This is important for mesh slicing when clearing lines
             FixedJoint renderedMeshJoint = renderedMesh.AddComponent<FixedJoint>();
-            renderedMeshJoint.connectedBody = _playablePiece.transform.GetChild(0).GetChild(0).GetComponent<Rigidbody>();
+            Debug.Log(_playablePiece.transform.GetChild(0).GetChild(0).name);
+            Debug.Log(_playablePiece.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Rigidbody>());
+            renderedMeshJoint.connectedBody = _playablePiece.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Rigidbody>();
 
             _holdActivated = false;
         }
