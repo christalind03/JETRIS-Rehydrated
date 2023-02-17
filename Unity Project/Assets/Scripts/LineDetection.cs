@@ -9,9 +9,6 @@ public class LineDetection : MonoBehaviour
 
     void Update()
     {
-        // Ray laser = new Ray(_initialRaycastPosition, Vector3.forward);
-        // Debug.DrawRay(laser.origin, laser.direction, Color.green, 3f);
-
         CheckRows();
     }
 
@@ -26,10 +23,15 @@ public class LineDetection : MonoBehaviour
     private bool IsRowFull(int numRow)
     {
         Ray rayCast = new Ray(_initialRaycastPosition + (Vector3.up * numRow), Vector3.forward);
+        RaycastHit rayCastHit;
 
         for(int columnNum = 0; columnNum < _columnSize; columnNum++)
         {
-            Debug.DrawRay(rayCast.origin, rayCast.direction, Color.green, 60f);
+            if(!Physics.Raycast(rayCast, out rayCastHit))
+            {
+                return false;
+            }
+
             rayCast.origin += Vector3.right;
         }
 
