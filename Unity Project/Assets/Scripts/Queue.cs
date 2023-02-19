@@ -18,6 +18,8 @@ public class Queue : MonoBehaviour
     private GameObject _queuedPiece4 = null;
     private GameObject _holdPiece = null;
 
+    private ObjectSlicer _objectSlicer = new ObjectSlicer();
+
     void Awake()
     {
         int piecesToDisplay = 5;
@@ -53,19 +55,17 @@ public class Queue : MonoBehaviour
     {
         if(!_holdActivated)
         {
-            if(_holdPiece == null)
+            // Swapping the current piece and the hold piece
+            GameObject tempObject = _holdPiece;
+            _holdPiece = _playablePiece;
+            _playablePiece = tempObject;
+
+            if(_playablePiece == null)
             {
-                _holdPiece = _playablePiece;
-                _playablePiece = null;
                 UpdateQueue();
             }
             else
             {
-                // Swapping the current piece and the hold piece
-                GameObject tempObject = _holdPiece;
-                _holdPiece = _playablePiece;
-                _playablePiece = tempObject;
-
                 UpdateTransforms();
             }
 
@@ -75,28 +75,9 @@ public class Queue : MonoBehaviour
 
     private void UpdateObjects(int objectToSpawn)
     {
-        // Drops the current piece the player has
         if(_playablePiece != null)
         {
-            GameObject renderedMesh = _playablePiece.transform.GetChild(1).gameObject;
-            renderedMesh.GetComponent<Rigidbody>().useGravity = true;
-
-            // Destroying now useless components
-            Destroy(renderedMesh.GetComponent<CheckBounds>());
-            foreach(BoxCollider collider in renderedMesh.GetComponents<BoxCollider>())
-            {
-                Destroy(collider);
-            }
-
-            GameObject playablePieceCubes = _playablePiece.transform.GetChild(0).gameObject;
-            playablePieceCubes.AddComponent<SoftbodyTetromino>();
-
-            // Creating a fixed joint to make the mesh collider follow the rendered mesh using the rigidbodies connected to the softbody cubes
-            // This is important for mesh slicing when clearing lines
-            FixedJoint renderedMeshJoint = renderedMesh.AddComponent<FixedJoint>();
-            renderedMeshJoint.connectedBody = _playablePiece.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Rigidbody>();
-
-            _holdActivated = false;
+            DropPlayablePiece();
         }
 
         // Updates the queue
@@ -120,7 +101,7 @@ public class Queue : MonoBehaviour
             }
             else if(_playablePiece.name == "Hero(Clone)")
             {
-                _playablePiece.transform.position = new Vector3(0f, 21f, 0f);
+                _playablePiece.transform.position = new Vector3(0f, 21.5f, 0f);
             }
             else if(_playablePiece.name != "Zero(Clone)" && _playablePiece.name != "Hero(Clone)")
             {
@@ -165,39 +146,44 @@ public class Queue : MonoBehaviour
 
     private GameObject Spawn(int objectToSpawn)
     {
-        string targetPath = "Prefabs/";
-
-        switch(objectToSpawn)
-        {
-            case 1:
-                targetPath += "Hero";
-                break;
-
-            case 2:
-                targetPath += "Blue Hook";
-                break;
-
-            case 3:
-                targetPath += "Orange Hook";
-                break;
-
-            case 4:
-                targetPath += "Red Skew";
-                break;
-
-            case 5:
-                targetPath += "Green Skew";
-                break;
-
-            case 6:
-                targetPath += "Tee";
-                break;
-
-            case 7:
-                targetPath += "Zero";
-                break;
-        }
-
+        Dictionary<int, string> objectPath = new Dictionary<int, string>(){{1, "Blue_Hook"}, 
+                                                                           {2, "Green_Skew"},
+                                                                           {3, "Hero"},
+                                                                           {4, "Orange_Hook"},
+                                                                           {5, "Red_Skew"},
+                                                                           {6, "Tee"},
+                                                                           {7, "Zero"}};
+                    
+        string targetPath = "Prefabs/" + objectPath[objectToSpawn];
         return Instantiate(Resources.Load<GameObject>(targetPath)); 
+    }
+
+    private void DropPlayablePiece()
+    {
+        GameObject renderedMesh = _playablePiece.transform.GetChild(1).gameObject;
+        DestroyUnwantedComponents(renderedMesh);
+
+        // Enabling softbody physics
+        GameObject playablePieceCubes = _playablePiece.transform.GetChild(0).gameObject;
+        playablePieceCubes.AddComponent<SoftbodyTetromino>();
+        
+        // Creating a fixed joint to make the mesh collider follow the rendered mesh using the rigidbodies connected to the softbody cubes
+        // This is important for mesh slicing when clearing lines
+        FixedJoint renderedMeshJoint = renderedMesh.AddComponent<FixedJoint>();
+        renderedMeshJoint.connectedBody = _playablePiece.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Rigidbody>();
+        renderedMesh.GetComponent<Rigidbody>().useGravity = true;
+
+        _objectSlicer.MakeSlicable(renderedMesh);
+        _holdActivated = false;
+    }
+
+    private void DestroyUnwantedComponents(GameObject objectToEdit)
+    {
+        Destroy(objectToEdit.GetComponent<CheckBounds>());
+
+        foreach(BoxCollider collider in objectToEdit.GetComponents<BoxCollider>())
+        {
+            Destroy(collider);
+        }
     }
 }

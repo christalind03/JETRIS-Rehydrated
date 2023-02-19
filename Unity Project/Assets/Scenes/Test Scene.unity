@@ -810,6 +810,8 @@ GameObject:
   - component: {fileID: 1191459428}
   - component: {fileID: 1191459429}
   - component: {fileID: 1191459427}
+  - component: {fileID: 1191459430}
+  - component: {fileID: 1191459431}
   m_Layer: 0
   m_Name: Game Master
   m_TagString: Game Master
@@ -854,6 +856,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73694353a58dd384b93d8ee5e74284d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1191459430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191459426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e16dd3c5cfa341a4eb19477211eceee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1191459431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191459426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac23e5431a3ca564cb81372eeff80f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1926578029

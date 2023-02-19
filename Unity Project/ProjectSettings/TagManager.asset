@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Game Master
   - Tetromino
+  - Sensor
   layers:
   - Default
   - TransparentFX
