@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class LineClearing : MonoBehaviour
 {
-    LevelManager _levelManager;
-    PointsManager _pointsManager;
+    private LevelManager _levelManager;
+    private PointsManager _pointsManager;
 
     void Start()
     {

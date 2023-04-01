@@ -5,29 +5,36 @@ using TMPro;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI currentLevelText;
+    private TextMeshProUGUI _currentLevelText;
 
-    private int currentLevel = 0;
-    private int linesCleared = 0;
+    private int _currentLevel = 0;
+    private int _linesCleared = 0;
+    private float _dropSpeed = 1.5f;
 
     void Start()
     {
-        currentLevelText.text = currentLevel.ToString();
+        _currentLevelText.text = _currentLevel.ToString();
     }
 
     void Update()
     {
-        if(linesCleared == (currentLevel * 1) + 1)
+        if(_linesCleared == (_currentLevel * 1) + 1)
         {
-            currentLevel++;
-            linesCleared = 0;
+            _currentLevel++;
+            _linesCleared = 0;
+            _dropSpeed /= 1.25f;
 
-            currentLevelText.text = currentLevel.ToString();
+            _currentLevelText.text = _currentLevel.ToString();
         }
+    }
+
+    public float GetDropSpeed()
+    {
+        return _dropSpeed;
     }
 
     public void UpdateLinesCleared()
     {
-        linesCleared++;
+        _linesCleared++;
     }
 }
