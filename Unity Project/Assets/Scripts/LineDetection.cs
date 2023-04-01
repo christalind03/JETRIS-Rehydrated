@@ -26,7 +26,7 @@ public class LineDetection : MonoBehaviour
             if(IsRowFull(rowNum))
             {
                 List<GameObject> detectedObjects = GetDetectedObjectList(rowNum);
-                _lineClearing.ClearLine(rowNum, detectedObjects);
+                _lineClearing.ClearLine(detectedObjects);
             }
         }
     }
