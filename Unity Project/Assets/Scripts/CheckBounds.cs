@@ -39,6 +39,8 @@ public class CheckBounds : MonoBehaviour
 
             if(otherObject.tag == "Tetromino" && collisionPoint.y <= 20f)
             {
+                Debug.Log(otherObject.name);
+                Debug.Log(collisionPoint.y);
                 thisObject.position += Vector3.up;
                 _gameQueue.UpdateQueue();
             }

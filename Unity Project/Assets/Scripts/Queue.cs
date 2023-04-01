@@ -18,8 +18,6 @@ public class Queue : MonoBehaviour
     private GameObject _queuedPiece4 = null;
     private GameObject _holdPiece = null;
 
-    private ObjectSlicer _objectSlicer = new ObjectSlicer();
-
     void Awake()
     {
         int piecesToDisplay = 5;
@@ -101,7 +99,7 @@ public class Queue : MonoBehaviour
             }
             else if(_playablePiece.name == "Hero(Clone)")
             {
-                _playablePiece.transform.position = new Vector3(0f, 21.5f, 0f);
+                _playablePiece.transform.position = new Vector3(0f, 21f, 0f);
             }
             else if(_playablePiece.name != "Zero(Clone)" && _playablePiece.name != "Hero(Clone)")
             {
@@ -173,7 +171,6 @@ public class Queue : MonoBehaviour
         renderedMeshJoint.connectedBody = _playablePiece.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Rigidbody>();
         renderedMesh.GetComponent<Rigidbody>().useGravity = true;
 
-        _objectSlicer.MakeSlicable(renderedMesh);
         _holdActivated = false;
     }
 
