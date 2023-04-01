@@ -4,6 +4,14 @@ using System.Collections.Generic;
 
 public class LineClearing : MonoBehaviour
 {
+    LevelManager _levelManager;
+    PointsManager _pointsManager;
+
+    void Start()
+    {
+        _levelManager = GameObject.FindGameObjectWithTag("UI").GetComponent<LevelManager>();
+    }
+
     public void ClearLine(List<GameObject> detectedObjects)
     {
         // Disable the softbody cubes and their correlating meshes
@@ -15,5 +23,7 @@ public class LineClearing : MonoBehaviour
             detectedObject.SetActive(false);
             detectedObjectMesh.SetActive(false);
         }
+        
+        _levelManager.UpdateLinesCleared();
     }
 }

@@ -16,11 +16,7 @@ public class LineDetection : MonoBehaviour
 
     void Update()
     {
-        CheckRows();
-    }
-
-    private void CheckRows()
-    {
+        // Check for all the rows
         for(int rowNum = 0; rowNum < _rowSize; rowNum++)
         {
             if(IsRowFull(rowNum))
