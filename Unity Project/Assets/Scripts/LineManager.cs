@@ -58,15 +58,27 @@ public class LineManager : MonoBehaviour
     private void ClearLine(int numRow)
     {
         List<GameObject> detectedObjects = GetDetectedObjectList(numRow);
+        int meshParentIndex = 1;
 
         // Disable the softbody cubes and their correlating meshes
         foreach(GameObject detectedObject in detectedObjects)
         {
-            int cubeNumber = Convert.ToInt32(detectedObject.name[detectedObject.name.Length - 1].ToString());
-            GameObject detectedObjectMesh = detectedObject.transform.root.GetChild(1).GetChild(cubeNumber - 1).gameObject;
+            GameObject rootObject = detectedObject.transform.root.gameObject;
+            GameObject meshParent = rootObject.transform.GetChild(meshParentIndex).gameObject;
 
-            detectedObject.SetActive(false);
-            detectedObjectMesh.SetActive(false);
+            // If the mesh parent has more than one child, disable only the detected objects. Otherwise, destroy the entire object from the root.
+            if(CountActiveChildren(meshParent) > 1)
+            {
+                int cubeNumber = Convert.ToInt32(detectedObject.name[detectedObject.name.Length - 1].ToString());
+                GameObject detectedObjectMesh = meshParent.transform.GetChild(cubeNumber - 1).gameObject;
+
+                detectedObject.SetActive(false);
+                detectedObjectMesh.SetActive(false);
+            }
+            else
+            {
+                Destroy(rootObject);
+            }
         }
         
         _levelManager.UpdateLinesCleared();
@@ -94,5 +106,20 @@ public class LineManager : MonoBehaviour
         }
 
         return allDetectedObjects;
+    }
+
+    private int CountActiveChildren(GameObject parentObject)
+    {
+        int numActiveChildren = 0;
+
+        foreach(Transform child in parentObject.transform)
+        {
+            if(child.gameObject.activeSelf)
+            {
+                numActiveChildren++;
+            }
+        }
+
+        return numActiveChildren;
     }
 }
