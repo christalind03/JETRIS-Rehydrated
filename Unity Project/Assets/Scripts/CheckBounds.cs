@@ -5,10 +5,12 @@ public class CheckBounds : MonoBehaviour
 {
     private bool _isColliding = false;
     private Queue _gameQueue;
+    private ScoreManager _scoreManager;
 
     void Awake()
     {
         _gameQueue = GameObject.FindWithTag("Game Master").GetComponent<Queue>();
+        _scoreManager = GameObject.FindWithTag("Game Master").GetComponent<ScoreManager>();
     }
 
     void OnTriggerEnter(Collider otherCollider)
@@ -39,10 +41,10 @@ public class CheckBounds : MonoBehaviour
 
             if(otherObject.tag == "Tetromino" && collisionPoint.y <= 20f)
             {
-                Debug.Log(otherObject.name);
-                Debug.Log(collisionPoint.y);
                 thisObject.position += Vector3.up;
+
                 _gameQueue.UpdateQueue();
+                _scoreManager.UpdateBlocksDropped();
             }
             
             if(otherCollider.name == "Grid Floor")

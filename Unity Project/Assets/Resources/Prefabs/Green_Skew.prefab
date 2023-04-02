@@ -1944,7 +1944,7 @@ GameObject:
   - component: {fileID: 7891318265951300250}
   m_Layer: 0
   m_Name: Green_Skew
-  m_TagString: Untagged
+  m_TagString: Tetromino
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

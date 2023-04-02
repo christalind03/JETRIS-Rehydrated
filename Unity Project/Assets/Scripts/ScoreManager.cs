@@ -17,11 +17,18 @@ public class ScoreManager : MonoBehaviour
     private int _prevNumRowsCleared = -1;
     private int _comboMultiplier = 0;
 
+    private int _numBlocksDropped = 0;
+
     void Awake()
     {
         _rowTypeText.text = "";
         _comboText.text = "";
         _scoreText.text = _currentScore.ToString();
+    }
+
+    public void UpdateBlocksDropped()
+    {
+        _numBlocksDropped++;
     }
 
     public void UpdateScore(int currentLevel, int rowsCleared)
@@ -57,22 +64,21 @@ public class ScoreManager : MonoBehaviour
             StartCoroutine(ClearRowTypeText());
         }
 
-        if(rowsCleared > 0)
+        if(rowsCleared == _prevNumRowsCleared && _numBlocksDropped == 1)
         {
-            if(rowsCleared == _prevNumRowsCleared)
-            {
-                _comboMultiplier++;
-                _comboText.text = $"COMBO x{_comboMultiplier}";
-                StartCoroutine(ClearComboText());
+            _comboMultiplier++;
+            _comboText.text = $"COMBO x{_comboMultiplier}";
+            StartCoroutine(ClearComboText());
 
-                _currentScore += _comboMultiplier * currentLevel * 50;
-                _prevNumRowsCleared = rowsCleared;
-            }
-            else
-            {
-                _comboMultiplier = 0;
-                _prevNumRowsCleared = rowsCleared;
-            }
+            _currentScore += _comboMultiplier * currentLevel * 50;
+            _prevNumRowsCleared = rowsCleared;
+            _numBlocksDropped = 0;
+        }
+        else
+        {
+            _comboMultiplier = 0;
+            _prevNumRowsCleared = rowsCleared;
+            _numBlocksDropped = 0;
         }
 
         _scoreText.text = _currentScore.ToString();

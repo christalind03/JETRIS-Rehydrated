@@ -6,6 +6,7 @@ public class UserInput : MonoBehaviour
     private PlayerControls _playerControls;
     
     private LevelManager _levelManager;
+    private ScoreManager _scoreManager;
     private Queue _gameQueue;
 
     private GameObject _playablePiece;
@@ -16,6 +17,7 @@ public class UserInput : MonoBehaviour
         _playerControls = new PlayerControls();
 
         _levelManager = this.gameObject.GetComponent<LevelManager>();
+        _scoreManager = this.gameObject.GetComponent<ScoreManager>();
         _gameQueue = this.gameObject.GetComponent<Queue>();
     }
 
@@ -62,6 +64,8 @@ public class UserInput : MonoBehaviour
     private void HardDrop(InputAction.CallbackContext context)
     {
         _gameQueue.UpdateQueue();
+        _scoreManager.UpdateBlocksDropped();
+        
         _timer = 0f;
     }
 
