@@ -47,6 +47,9 @@ public class ScoreManager : MonoBehaviour
                 _rowTypeText.text = "TETRIS";
                 _currentScore += 1200 * (currentLevel + 1);
                 break;
+            
+            default:
+                return;
         }
 
         if(_rowTypeText.text != "")
@@ -54,19 +57,22 @@ public class ScoreManager : MonoBehaviour
             StartCoroutine(ClearRowTypeText());
         }
 
-        if(rowsCleared > 0 && rowsCleared == _prevNumRowsCleared)
+        if(rowsCleared > 0)
         {
-            _comboMultiplier++;
-            _comboText.text = $"COMBO x{_comboMultiplier}";
-            StartCoroutine(ClearComboText());
+            if(rowsCleared == _prevNumRowsCleared)
+            {
+                _comboMultiplier++;
+                _comboText.text = $"COMBO x{_comboMultiplier}";
+                StartCoroutine(ClearComboText());
 
-            _currentScore += _comboMultiplier * currentLevel * 50;
-            _prevNumRowsCleared = rowsCleared;
-        }
-        else if(rowsCleared > 0 && rowsCleared != _prevNumRowsCleared)
-        {
-            _comboMultiplier = 0;
-            _prevNumRowsCleared = rowsCleared;
+                _currentScore += _comboMultiplier * currentLevel * 50;
+                _prevNumRowsCleared = rowsCleared;
+            }
+            else
+            {
+                _comboMultiplier = 0;
+                _prevNumRowsCleared = rowsCleared;
+            }
         }
 
         _scoreText.text = _currentScore.ToString();
