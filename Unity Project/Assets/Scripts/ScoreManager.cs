@@ -6,18 +6,19 @@ public class ScoreManager : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI _rowTypeText;
+
     [SerializeField]
     private TextMeshProUGUI _comboText;
+    
     [SerializeField]
     private TextMeshProUGUI _scoreText;
 
     private int _currentScore = 0;
     private int _highScore = 0;
 
-    private int _prevNumRowsCleared = -1;
-    private int _comboMultiplier = 0;
-
+    private int _prevNumRowsCleared = 0;
     private int _numBlocksDropped = 0;
+    private int _comboMultiplier = 0;
 
     void Awake()
     {
@@ -66,19 +67,19 @@ public class ScoreManager : MonoBehaviour
 
         if(rowsCleared == _prevNumRowsCleared && _numBlocksDropped == 1)
         {
-            _comboMultiplier++;
-            _comboText.text = $"COMBO x{_comboMultiplier}";
-            StartCoroutine(ClearComboText());
-
-            _currentScore += _comboMultiplier * currentLevel * 50;
             _prevNumRowsCleared = rowsCleared;
             _numBlocksDropped = 0;
+
+            _comboMultiplier++;
+            _comboText.text = $"COMBO x{_comboMultiplier}";
+            _currentScore += _comboMultiplier * currentLevel * 50;
+            StartCoroutine(ClearComboText());
         }
         else
         {
-            _comboMultiplier = 0;
             _prevNumRowsCleared = rowsCleared;
             _numBlocksDropped = 0;
+            _comboMultiplier = 0;
         }
 
         _scoreText.text = _currentScore.ToString();

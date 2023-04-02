@@ -17,7 +17,7 @@ public class LineManager : MonoBehaviour
         _levelManager = this.gameObject.GetComponent<LevelManager>();
         _scoreManager = this.gameObject.GetComponent<ScoreManager>();
 
-        InvokeRepeating("UpdateRows", 0, 0.75f);
+        InvokeRepeating("UpdateRows", 0, 1.15f);
     }
 
     private void UpdateRows()
