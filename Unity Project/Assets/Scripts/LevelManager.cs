@@ -1,6 +1,5 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
@@ -11,21 +10,14 @@ public class LevelManager : MonoBehaviour
     private int _linesCleared = 0;
     private float _dropSpeed = 1.5f;
 
-    void Start()
+    void Awake()
     {
         _currentLevelText.text = _currentLevel.ToString();
     }
 
-    void Update()
+    public int GetCurrentLevel()
     {
-        if(_linesCleared == (_currentLevel * 1) + 1)
-        {
-            _currentLevel++;
-            _linesCleared = 0;
-            _dropSpeed /= 1.25f;
-
-            _currentLevelText.text = _currentLevel.ToString();
-        }
+        return _currentLevel;
     }
 
     public float GetDropSpeed()
@@ -36,5 +28,19 @@ public class LevelManager : MonoBehaviour
     public void UpdateLinesCleared()
     {
         _linesCleared++;
+
+        if(_linesCleared == (_currentLevel * 1) + 1)
+        {
+            UpdateCurrentLevel();
+        }
+    }
+
+    private void UpdateCurrentLevel()
+    { 
+        _currentLevel++;
+        _linesCleared = 0;
+        _dropSpeed /= 1.25f;
+
+        _currentLevelText.text = _currentLevel.ToString();
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class UserInput : MonoBehaviour
 {
     private PlayerControls _playerControls;
+    
     private LevelManager _levelManager;
     private Queue _gameQueue;
 
@@ -13,7 +14,8 @@ public class UserInput : MonoBehaviour
     void Awake()
     {
         _playerControls = new PlayerControls();
-        _levelManager = GameObject.FindGameObjectWithTag("UI").GetComponent<LevelManager>();
+
+        _levelManager = this.gameObject.GetComponent<LevelManager>();
         _gameQueue = this.gameObject.GetComponent<Queue>();
     }
 
