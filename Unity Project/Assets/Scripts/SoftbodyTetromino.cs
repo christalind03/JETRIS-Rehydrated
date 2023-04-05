@@ -3,7 +3,7 @@ using UnityEngine;
 public class SoftbodyTetromino : MonoBehaviour
 {
     // SPRING SETTINGS
-    private float _springStrength = 350f;
+    private float _springStrength = 550f;
     private float _damperStrength = 0.125f;
 
     void Awake()
