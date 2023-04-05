@@ -65,7 +65,7 @@ public class ScoreManager : MonoBehaviour
             StartCoroutine(ClearRowTypeText());
         }
 
-        if(rowsCleared == _prevNumRowsCleared && _numBlocksDropped == 1)
+        if(rowsCleared == _prevNumRowsCleared && _numBlocksDropped <= 1)
         {
             _prevNumRowsCleared = rowsCleared;
             _numBlocksDropped = 0;

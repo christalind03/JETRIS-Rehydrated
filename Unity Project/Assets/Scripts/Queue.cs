@@ -161,6 +161,10 @@ public class Queue : MonoBehaviour
         GameObject renderedMesh = _playablePiece.transform.GetChild(1).gameObject;
         DestroyUnwantedComponents(renderedMesh);
 
+        // Adding script to check if a Tetromino is moving or not.
+        // This is helpful for line clearing and game over detection.
+        renderedMesh.AddComponent<CheckMovement>();
+
         // Enabling softbody physics
         GameObject playablePieceCubes = _playablePiece.transform.GetChild(0).gameObject;
         playablePieceCubes.AddComponent<SoftbodyTetromino>();
