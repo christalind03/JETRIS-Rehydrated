@@ -7,13 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Zero Material
+  m_Name: Green Skew
   m_Shader: {fileID: 4800000, guid: 6e4ae4064600d784cac1e41a9e6f2e59, type: 3}
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _ENABLE_FOG_ON_TRANSPARENT
   - _MATERIAL_FEATURE_CLEAR_COAT
   - _NORMALMAP
+  - _NORMALMAP_TANGENT_SPACE
   - _REFRACTION_PLANE
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
@@ -81,7 +82,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 8b224100c197f83499dfa801a667da50, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8d4736aacbb4a99438461e8da325457d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapOS:
@@ -142,7 +143,7 @@ Material:
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
     - _BlendMode: 0
-    - _CoatMask: 0.75
+    - _CoatMask: 0.45
     - _CullMode: 2
     - _CullModeForward: 2
     - _Cutoff: 0.5
@@ -185,8 +186,8 @@ Material:
     - _Metallic: 0
     - _MetallicRemapMax: 1
     - _MetallicRemapMin: 0
-    - _NormalMapSpace: 1
-    - _NormalScale: 0.15
+    - _NormalMapSpace: 0
+    - _NormalScale: 0.25
     - _OpaqueCullMode: 2
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
@@ -197,7 +198,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 1
-    - _Smoothness: 0.75
+    - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _SpecularAAScreenSpaceVariance: 0.1
@@ -248,7 +249,7 @@ Material:
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
-    - _TransmittanceColor: {r: 0.9411765, g: 0.9411765, b: 0, a: 1}
+    - _TransmittanceColor: {r: 0, g: 0.9411765, b: 0, a: 1}
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
