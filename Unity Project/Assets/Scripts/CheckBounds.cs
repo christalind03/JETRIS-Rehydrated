@@ -23,25 +23,28 @@ public class CheckBounds : MonoBehaviour
         {
             _isColliding = true;
 
-            Transform thisObject = this.transform.root;
-            Transform otherObject = otherCollider.transform.root;
+            GameObject thisObject = this.transform.root.gameObject;
             Vector3 collisionPoint = otherCollider.ClosestPoint(transform.position);
 
             if(otherCollider.name == "Grid Pillars")
             {
                 if(IsPositive(collisionPoint.x))
                 {
-                    thisObject.position += Vector3.left;
+                    thisObject.transform.position += Vector3.left;
                 }
                 else
                 {
-                    thisObject.position += Vector3.right;
+                    thisObject.transform.position += Vector3.right;
                 }
             }
 
-            if(otherObject.tag == "Tetromino" && collisionPoint.y <= 20f)
+            int meshParentIndex = 1;
+            GameObject otherObject = otherCollider.transform.root.gameObject;
+            GameObject otherObjectMeshParent = otherObject.transform.GetChild(meshParentIndex).gameObject;
+
+            if(otherObject.tag == "Tetromino" && otherObjectMeshParent.TryGetComponent<CheckMovement>(out CheckMovement otherObjectMovement) && otherObjectMovement.IsMoving() == false && collisionPoint.y <= 20f)
             {
-                thisObject.position += Vector3.up;
+                thisObject.transform.position += Vector3.up;
 
                 _gameQueue.UpdateQueue();
                 _scoreManager.UpdateBlocksDropped();

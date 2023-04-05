@@ -25,7 +25,6 @@ public class LineManager : MonoBehaviour
 
         if(IsGameEnd())
         {
-            Debug.Log("Game Over!");
             SceneManager.LoadScene("Game Over");
         }
 
