@@ -17,7 +17,7 @@ public class CheckMovement : MonoBehaviour
     {
         float currentHeight = this.transform.position.y;
 
-        if(_previousHeight - 0.025f < currentHeight && currentHeight < _previousHeight + 0.025f)
+        if(_previousHeight - 0.05f < currentHeight && currentHeight < _previousHeight + 0.05f)
         {
             _isMoving = false;
         }
