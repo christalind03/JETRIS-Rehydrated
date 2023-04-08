@@ -4,8 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(LevelManager))]
-[RequireComponent(typeof(ScoreManager))]
 public class LineManager : MonoBehaviour
 {
     private int _rowSize = 20;

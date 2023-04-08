@@ -1,9 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(GameQueue))]
-[RequireComponent(typeof(LevelManager))]
-[RequireComponent(typeof(ScoreManager))]
 public class UserInput : MonoBehaviour
 {
     private PlayerControls _playerControls;
