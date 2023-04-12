@@ -89,7 +89,7 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Invalid pause option.");
+                Debug.LogError($"Invalid pause option \" {pauseOption} \" entered as a parameter");
             }
         }
         else
