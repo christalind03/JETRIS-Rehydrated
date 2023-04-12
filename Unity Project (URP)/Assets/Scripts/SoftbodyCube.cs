@@ -13,7 +13,7 @@ public class SoftbodyCube : MonoBehaviour
     private float _sensorColliderSize = 0.015f;
 
     // SPRING SETTINGS
-    private float _springStrength = 275f;
+    private float _springStrength = 375f;
     private float _damperStrength = 0.25f;
 
     void Awake()

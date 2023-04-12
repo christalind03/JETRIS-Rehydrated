@@ -9,7 +9,10 @@ public class UserInput : MonoBehaviour
     private LevelManager _levelManager;
     private ScoreManager _scoreManager;
 
+    private PauseMenu _pauseMenu;
+
     private GameObject _playablePiece;
+    private bool _isPaused = false;
     private float _timer = 0f;
 
     void Awake()
@@ -19,6 +22,8 @@ public class UserInput : MonoBehaviour
         _levelManager = this.gameObject.GetComponent<LevelManager>();
         _scoreManager = this.gameObject.GetComponent<ScoreManager>();
         _gameQueue = this.gameObject.GetComponent<GameQueue>();
+
+        _pauseMenu = GameObject.Find("Pause Menu (Canvas)").GetComponent<PauseMenu>();
     }
 
     void OnEnable()
@@ -31,10 +36,13 @@ public class UserInput : MonoBehaviour
         _playerControls.Movement.SoftDrop.performed += SoftDrop;
         _playerControls.Movement.Rotate.performed += Rotate;
         _playerControls.Movement.Hold.performed += Hold;
+
+        _playerControls.Movement.Pause.performed += Pause;
     }
 
     void Update()
     {
+        _isPaused = _pauseMenu.GetState();
         _playablePiece = _gameQueue.GetPlayablePiece();
         IdleDrop();
     }
@@ -53,37 +61,67 @@ public class UserInput : MonoBehaviour
 
     private void MoveLeft(InputAction.CallbackContext context)
     {
-        _playablePiece.transform.position += new Vector3(-1f, 0f, 0f);
+        if(!_isPaused)
+        {
+            _playablePiece.transform.position += new Vector3(-1f, 0f, 0f);
+        }
     }
 
     private void MoveRight(InputAction.CallbackContext context)
     {
-        _playablePiece.transform.position += new Vector3(1f, 0f, 0f);
+        if(!_isPaused)
+        {
+            _playablePiece.transform.position += new Vector3(1f, 0f, 0f);
+        }
     }
 
     private void HardDrop(InputAction.CallbackContext context)
     {
-        _gameQueue.UpdateQueue();
-        _scoreManager.UpdateBlocksDropped();
-        
-        _timer = 0f;
+        if(!_isPaused)
+        {
+            _gameQueue.UpdateQueue();
+            _scoreManager.UpdateBlocksDropped();
+            
+            _timer = 0f;
+        }
     }
 
     private void SoftDrop(InputAction.CallbackContext context)
     {
-        _playablePiece.transform.position += new Vector3(0f, -1f, 0f);
-        _timer = 0f;
+        if(!_isPaused)
+        {
+            _playablePiece.transform.position += new Vector3(0f, -1f, 0f);
+            _timer = 0f;
+        }
     }
 
     private void Rotate(InputAction.CallbackContext context)
     {
-        _playablePiece.transform.RotateAround(_playablePiece.transform.position, Vector3.back, 90f);
+        if(!_isPaused)
+        {
+            _playablePiece.transform.RotateAround(_playablePiece.transform.position, Vector3.back, 90f);
+        }
     }
 
     private void Hold(InputAction.CallbackContext context)
     {
-        _gameQueue.UpdateHold();
-        _timer = 0f;
+        if(!_isPaused)
+        {            
+            _gameQueue.UpdateHold();
+            _timer = 0f;
+        }
+    }
+
+    private void Pause(InputAction.CallbackContext context)
+    {
+        if(_isPaused)
+        {
+            _pauseMenu.ResumeGame();
+        }
+        else
+        {
+            _pauseMenu.PauseGame();
+        }
     }
 
     void OnDisable()
@@ -96,5 +134,7 @@ public class UserInput : MonoBehaviour
         _playerControls.Movement.SoftDrop.performed -= SoftDrop;
         _playerControls.Movement.Rotate.performed -= Rotate;
         _playerControls.Movement.Hold.performed -= Hold;
+        
+        _playerControls.Movement.Pause.performed -= Pause;
     }
 }
