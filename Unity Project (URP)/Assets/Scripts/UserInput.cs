@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class UserInput : MonoBehaviour
 {
+    private AudioManager _audioManager;
+
     private PlayerControls _playerControls;
     
     private GameQueue _gameQueue;
@@ -17,6 +19,8 @@ public class UserInput : MonoBehaviour
 
     void Awake()
     {
+        _audioManager = FindObjectOfType<AudioManager>();
+
         _playerControls = new PlayerControls();
 
         _levelManager = this.gameObject.GetComponent<LevelManager>();
@@ -81,6 +85,7 @@ public class UserInput : MonoBehaviour
         {
             _gameQueue.UpdateQueue();
             _scoreManager.UpdateBlocksDropped();
+            _audioManager.Play("Jelly Collision");
             
             _timer = 0f;
         }

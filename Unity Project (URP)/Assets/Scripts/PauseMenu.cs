@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class PauseMenu : MonoBehaviour
 {
+    private AudioManager _audioManager;
+
     private GameObject _backdrop;
     private GameObject _pauseMenu;
     private GameObject _warningPrompt;
@@ -18,12 +20,19 @@ public class PauseMenu : MonoBehaviour
 
     void Awake()
     {
+        _audioManager = FindObjectOfType<AudioManager>();
+
         _backdrop = this.transform.GetChild(0).gameObject;
         _pauseMenu = this.transform.GetChild(1).gameObject;
         _warningPrompt = this.transform.GetChild(2).gameObject;
 
         _warningYes = _warningPrompt.transform.GetChild(2).gameObject.GetComponent<Button>();
         _warningNo = _warningPrompt.transform.GetChild(3).gameObject.GetComponent<Button>();
+    }
+
+    public void SetState(bool newState)
+    {
+        _isPaused = newState;
     }
 
     public bool GetState()
@@ -80,6 +89,7 @@ public class PauseMenu : MonoBehaviour
         {
             if(pauseOption == "Main Menu")
             {
+                _audioManager.Stop("Game");
                 SceneManager.LoadScene("Main Menu");
             }
             else if (pauseOption == "Quit")

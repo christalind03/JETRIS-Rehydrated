@@ -3,14 +3,17 @@ using System.Collections;
 
 public class CheckBounds : MonoBehaviour
 {
-    private bool _isColliding = false;
     private GameQueue _gameQueue;
     private ScoreManager _scoreManager;
+    private AudioManager _audioManager;
+
+    private bool _isColliding = false;
 
     void Awake()
     {
         _gameQueue = GameObject.FindWithTag("Game Master").GetComponent<GameQueue>();
         _scoreManager = GameObject.FindWithTag("Game Master").GetComponent<ScoreManager>();
+        _audioManager = FindObjectOfType<AudioManager>();
     }
 
     void OnTriggerEnter(Collider otherCollider)
@@ -48,11 +51,15 @@ public class CheckBounds : MonoBehaviour
 
                 _gameQueue.UpdateQueue();
                 _scoreManager.UpdateBlocksDropped();
+                _audioManager.Play("Jelly Collision");
             }
             
             if(otherCollider.name == "Grid Floor")
             {
+                thisObject.transform.position += Vector3.up;
+
                 _gameQueue.UpdateQueue();
+                _audioManager.Play("Jelly Collision");
             }
 
             StartCoroutine(ResetCollision());
