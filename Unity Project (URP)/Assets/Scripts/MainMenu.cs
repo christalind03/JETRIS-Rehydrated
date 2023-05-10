@@ -5,14 +5,15 @@ public class MainMenu : MonoBehaviour
 {
     private AudioManager _audioManager;
 
-    void Awake()
+    void Start()
     {
-        _audioManager = FindObjectOfType<AudioManager>();
+        _audioManager = AudioManager.instance;
         _audioManager.Play("Main Menu");
     }
 
     public void PlayGame()
     {
+        _audioManager.Stop("Main Menu");
         SceneManager.LoadScene("Game");
     }
 

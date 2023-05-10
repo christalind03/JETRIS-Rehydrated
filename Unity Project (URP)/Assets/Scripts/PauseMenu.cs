@@ -16,11 +16,10 @@ public class PauseMenu : MonoBehaviour
     private Button _warningNo;
 
     private int _warningResponse;
-    private bool _isPaused = false;
 
     void Awake()
     {
-        _audioManager = FindObjectOfType<AudioManager>();
+        _audioManager = AudioManager.instance;
 
         _backdrop = this.transform.GetChild(0).gameObject;
         _pauseMenu = this.transform.GetChild(1).gameObject;
@@ -30,35 +29,19 @@ public class PauseMenu : MonoBehaviour
         _warningNo = _warningPrompt.transform.GetChild(3).gameObject.GetComponent<Button>();
     }
 
-    public void SetState(bool newState)
-    {
-        _isPaused = newState;
-    }
-
-    public bool GetState()
-    {
-        return _isPaused;
-    }
-
-    public void PauseGame()
+    public void OpenMenu()
     {
         // Reset warning prompt
         _backdrop.SetActive(true);
         _pauseMenu.SetActive(true);
         _warningPrompt.SetActive(false);
-
-        Time.timeScale = 0f;
-        _isPaused = true;
     }
 
-    public void ResumeGame()
+    public void CloseMenu()
     {
         _backdrop.SetActive(false);
         _pauseMenu.SetActive(false);
         _warningPrompt.SetActive(false);
-
-        Time.timeScale = 1f;
-        _isPaused = false;
     }
 
     public void MainMenu()
@@ -92,7 +75,7 @@ public class PauseMenu : MonoBehaviour
                 _audioManager.Stop("Game");
                 SceneManager.LoadScene("Main Menu");
             }
-            else if (pauseOption == "Quit")
+            else if(pauseOption == "Quit")
             {
                 Debug.Log("Quitting application...");
                 Application.Quit();
@@ -104,7 +87,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            PauseGame();
+            OpenMenu();
         }
     }
 

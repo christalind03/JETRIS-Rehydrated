@@ -7,6 +7,7 @@ public class UserInput : MonoBehaviour
 
     private PlayerControls _playerControls;
     
+    private Game _game;
     private GameQueue _gameQueue;
     private LevelManager _levelManager;
     private ScoreManager _scoreManager;
@@ -14,15 +15,16 @@ public class UserInput : MonoBehaviour
     private PauseMenu _pauseMenu;
 
     private GameObject _playablePiece;
-    private bool _isPaused = false;
+    private bool _isGamePaused = false;
     private float _timer = 0f;
 
     void Awake()
     {
-        _audioManager = FindObjectOfType<AudioManager>();
+        _audioManager = AudioManager.instance;
 
         _playerControls = new PlayerControls();
 
+        _game = this.gameObject.GetComponent<Game>();
         _levelManager = this.gameObject.GetComponent<LevelManager>();
         _scoreManager = this.gameObject.GetComponent<ScoreManager>();
         _gameQueue = this.gameObject.GetComponent<GameQueue>();
@@ -46,7 +48,7 @@ public class UserInput : MonoBehaviour
 
     void Update()
     {
-        _isPaused = _pauseMenu.GetState();
+        _isGamePaused = _game.GetState();
         _playablePiece = _gameQueue.GetPlayablePiece();
         IdleDrop();
     }
@@ -65,7 +67,7 @@ public class UserInput : MonoBehaviour
 
     private void MoveLeft(InputAction.CallbackContext context)
     {
-        if(!_isPaused)
+        if(!_isGamePaused)
         {
             _playablePiece.transform.position += new Vector3(-1f, 0f, 0f);
         }
@@ -73,7 +75,7 @@ public class UserInput : MonoBehaviour
 
     private void MoveRight(InputAction.CallbackContext context)
     {
-        if(!_isPaused)
+        if(!_isGamePaused)
         {
             _playablePiece.transform.position += new Vector3(1f, 0f, 0f);
         }
@@ -81,7 +83,7 @@ public class UserInput : MonoBehaviour
 
     private void HardDrop(InputAction.CallbackContext context)
     {
-        if(!_isPaused)
+        if(!_isGamePaused)
         {
             _gameQueue.UpdateQueue();
             _scoreManager.UpdateBlocksDropped();
@@ -93,7 +95,7 @@ public class UserInput : MonoBehaviour
 
     private void SoftDrop(InputAction.CallbackContext context)
     {
-        if(!_isPaused)
+        if(!_isGamePaused)
         {
             _playablePiece.transform.position += new Vector3(0f, -1f, 0f);
             _timer = 0f;
@@ -102,7 +104,7 @@ public class UserInput : MonoBehaviour
 
     private void Rotate(InputAction.CallbackContext context)
     {
-        if(!_isPaused)
+        if(!_isGamePaused)
         {
             _playablePiece.transform.RotateAround(_playablePiece.transform.position, Vector3.back, 90f);
         }
@@ -110,7 +112,7 @@ public class UserInput : MonoBehaviour
 
     private void Hold(InputAction.CallbackContext context)
     {
-        if(!_isPaused)
+        if(!_isGamePaused)
         {            
             _gameQueue.UpdateHold();
             _timer = 0f;
@@ -119,13 +121,18 @@ public class UserInput : MonoBehaviour
 
     private void Pause(InputAction.CallbackContext context)
     {
-        if(_isPaused)
+        // If the game is not paused and the pause button is pressed, open the menu.
+        if(!_isGamePaused)
         {
-            _pauseMenu.ResumeGame();
+            _game.PauseGame();
+            _pauseMenu.OpenMenu();
         }
-        else
+        
+        // If the game is paused and the pause button is pressed, close the menu.
+        if(_isGamePaused)
         {
-            _pauseMenu.PauseGame();
+            _game.ResumeGame();
+            _pauseMenu.CloseMenu();
         }
     }
 

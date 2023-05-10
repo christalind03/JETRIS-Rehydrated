@@ -3,17 +3,19 @@ using System.Collections;
 
 public class CheckBounds : MonoBehaviour
 {
+    private AudioManager _audioManager;
+
     private GameQueue _gameQueue;
     private ScoreManager _scoreManager;
-    private AudioManager _audioManager;
 
     private bool _isColliding = false;
 
     void Awake()
     {
+        _audioManager = AudioManager.instance;
+        
         _gameQueue = GameObject.FindWithTag("Game Master").GetComponent<GameQueue>();
         _scoreManager = GameObject.FindWithTag("Game Master").GetComponent<ScoreManager>();
-        _audioManager = FindObjectOfType<AudioManager>();
     }
 
     void OnTriggerEnter(Collider otherCollider)
