@@ -48,6 +48,11 @@ public class Game : MonoBehaviour
         return _isPaused;
     }
 
+    public bool GetCountdownState()
+    {
+        return _isCountdownDone;
+    }
+
     public void PauseGame()
     {
         Time.timeScale = 0f;

@@ -121,18 +121,21 @@ public class UserInput : MonoBehaviour
 
     private void Pause(InputAction.CallbackContext context)
     {
-        // If the game is not paused and the pause button is pressed, open the menu.
-        if(!_isGamePaused)
+        if(_game.GetCountdownState())
         {
-            _game.PauseGame();
-            _pauseMenu.OpenMenu();
-        }
-        
-        // If the game is paused and the pause button is pressed, close the menu.
-        if(_isGamePaused)
-        {
-            _game.ResumeGame();
-            _pauseMenu.CloseMenu();
+            // If the game is not paused and the pause button is pressed, open the menu.
+            if(!_isGamePaused)
+            {
+                _game.PauseGame();
+                _pauseMenu.OpenMenu();
+            }
+            
+            // If the game is paused and the pause button is pressed, close the menu.
+            if(_isGamePaused)
+            {
+                _game.ResumeGame();
+                _pauseMenu.CloseMenu();
+            }
         }
     }
 
