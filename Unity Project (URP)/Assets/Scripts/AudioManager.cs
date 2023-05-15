@@ -5,7 +5,13 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField]
-    private Sound[] allSounds;
+    private Music[] _allMusic;
+
+    [SerializeField]
+    private Sound[] _allSounds;
+
+    [SerializeField]
+    private AudioMixer _masterMixer;
 
     public static AudioManager instance;
 
@@ -24,8 +30,19 @@ public class AudioManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        // Load sounds
-        foreach(Sound sound in allSounds)
+        // Load music and sounds
+        foreach(Music music in _allMusic)
+        {
+            music.source = gameObject.AddComponent<AudioSource>();
+
+            music.source.clip = music.audioClip;
+            music.source.volume = music.volume;
+            music.source.loop = music.loop;
+
+            music.source.outputAudioMixerGroup = _masterMixer.FindMatchingGroups("Music Volume")[0];
+        }
+        
+        foreach(Sound sound in _allSounds)
         {
             sound.source = gameObject.AddComponent<AudioSource>();
 
@@ -33,34 +50,75 @@ public class AudioManager : MonoBehaviour
             sound.source.volume = sound.volume;
             sound.source.loop = sound.loop;
 
+            sound.source.outputAudioMixerGroup = _masterMixer.FindMatchingGroups("Sound Volume")[0];
         }
     }
 
-    public void Play(string name)
+    public void PlayMusic(string name)
     {
-        Sound selectedSound = Array.Find(allSounds, sound => sound.name == name);
+        Music selectedMusic = Array.Find(_allMusic, music => music.name == name);
 
+        if(selectedMusic == null)
+        {
+            Debug.LogWarning("The name \"" + name + "\" could not be found as a Music object.");
+            return;
+        }
+        
+        selectedMusic.source.Play();
+    }
+
+    public void PlaySound(string name)
+    {
+        Sound selectedSound = Array.Find(_allSounds, sound => sound.name == name);
+        
         if(selectedSound == null)
         {
-            Debug.LogWarning("Sound \"" + selectedSound.name + "\" could not be found");
+            Debug.LogWarning("The name \"" + name + "\" could not be found as a Sound object.");
             return;
         }
 
         selectedSound.source.Play();
     }
 
-    public void Stop(string name)
+    public void StopMusic(string name)
     {
-        Sound selectedSound = Array.Find(allSounds, sound => sound.name == name);
+        Music selectedMusic = Array.Find(_allMusic, music => music.name == name);
 
+        if(selectedMusic == null)
+        {
+            Debug.LogWarning("The name \"" + name + "\" could not be found as a Music object.");
+            return;
+        }
+        
+        selectedMusic.source.Stop();
+    }
+
+    public void StopSound(string name)
+    {
+        Sound selectedSound = Array.Find(_allSounds, sound => sound.name == name);
+        
         if(selectedSound == null)
         {
-            Debug.LogWarning("Sound \"" + selectedSound.name + "\" could not be found");
+            Debug.LogWarning("The name \"" + name + "\" could not be found as a Sound object.");
             return;
         }
 
         selectedSound.source.Stop();
     }
+}
+
+[System.Serializable]
+public class Music
+{
+    public string name;
+    public AudioClip audioClip;
+
+    [Range(0f, 1f)]
+    public float volume;
+    public bool loop;
+
+    [HideInInspector]
+    public AudioSource source;
 }
 
 [System.Serializable]

@@ -87,7 +87,7 @@ public class UserInput : MonoBehaviour
         {
             _gameQueue.UpdateQueue();
             _scoreManager.UpdateBlocksDropped();
-            _audioManager.Play("Jelly Collision");
+            _audioManager.PlaySound("Jelly Collision");
             
             _timer = 0f;
         }

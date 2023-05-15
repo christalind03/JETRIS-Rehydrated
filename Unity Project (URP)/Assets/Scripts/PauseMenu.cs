@@ -72,7 +72,7 @@ public class PauseMenu : MonoBehaviour
         {
             if(pauseOption == "Main Menu")
             {
-                _audioManager.Stop("Game");
+                _audioManager.StopMusic("Game");
                 SceneManager.LoadScene("Main Menu");
             }
             else if(pauseOption == "Quit")

@@ -16,7 +16,7 @@ public class Game : MonoBehaviour
     void Start()
     {
         _audioManager = AudioManager.instance;
-        _audioManager.Play("Game");
+        _audioManager.PlayMusic("Game");
 
         StartCoroutine(StartCountdown());
     }
@@ -26,7 +26,7 @@ public class Game : MonoBehaviour
         Time.timeScale = 0f;
         _isPaused = true;
 
-        _audioManager.Play("Countdown");
+        _audioManager.PlaySound("Countdown");
         _countdownText.text = "3";
         yield return new WaitForSecondsRealtime(1f);
         _countdownText.text = "2";

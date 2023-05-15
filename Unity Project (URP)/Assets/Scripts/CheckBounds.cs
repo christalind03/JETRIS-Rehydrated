@@ -53,7 +53,7 @@ public class CheckBounds : MonoBehaviour
 
                 _gameQueue.UpdateQueue();
                 _scoreManager.UpdateBlocksDropped();
-                _audioManager.Play("Jelly Collision");
+                _audioManager.PlaySound("Jelly Collision");
             }
             
             if(otherCollider.name == "Grid Floor")
@@ -61,7 +61,7 @@ public class CheckBounds : MonoBehaviour
                 thisObject.transform.position += Vector3.up;
 
                 _gameQueue.UpdateQueue();
-                _audioManager.Play("Jelly Collision");
+                _audioManager.PlaySound("Jelly Collision");
             }
 
             StartCoroutine(ResetCollision());
