@@ -23,20 +23,23 @@ public class Game : MonoBehaviour
 
     private IEnumerator StartCountdown()
     {
+        _audioManager.PlaySound("Countdown");
         Time.timeScale = 0f;
         _isPaused = true;
 
-        _audioManager.PlaySound("Countdown");
         _countdownText.text = "3";
         yield return new WaitForSecondsRealtime(1f);
+
         _countdownText.text = "2";
         yield return new WaitForSecondsRealtime(1f);
+
         _countdownText.text = "1";
         yield return new WaitForSecondsRealtime(1f);
+
         _countdownText.text = "GO!";
         yield return new WaitForSecondsRealtime(1f);
+        
         _countdownText.text = "";
-
         Time.timeScale = 1f;
         _isPaused = false;
 

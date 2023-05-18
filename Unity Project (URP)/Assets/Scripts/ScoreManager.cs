@@ -25,6 +25,14 @@ public class ScoreManager : MonoBehaviour
         _rowTypeText.text = "";
         _comboText.text = "";
         _scoreText.text = _currentScore.ToString();
+
+        // Setup highscore if not already
+        if(PlayerPrefs.HasKey("Highscore"))
+        {
+            PlayerPrefs.SetInt("Highscore", 0);
+        }
+
+        _highScore = PlayerPrefs.GetInt("Highscore");
     }
 
     public void UpdateBlocksDropped()
@@ -83,6 +91,18 @@ public class ScoreManager : MonoBehaviour
         }
 
         _scoreText.text = _currentScore.ToString();
+
+        // Update highscore if the current score is greater than the old highscore
+        if(_currentScore > _highScore)
+        {
+            PlayerPrefs.SetInt("Highscore", _currentScore);
+            _highScore = _currentScore;
+        }
+    }
+
+    public void SaveCurrentScore()
+    {
+        PlayerPrefs.SetInt("Score", _currentScore);
     }
 
     private IEnumerator ClearRowTypeText()
