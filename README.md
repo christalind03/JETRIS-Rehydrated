@@ -7,6 +7,8 @@ This project was originally developed in June 2022 with the Unity game engine by
 
 Since the original release of JETRIS, Christalin Dorsey has made significant improvements to Jetris, including bug fixes, performance optimization, new features, enhanced visuals and audio, and improved user interface, resulting in a more polished and enjoyable gaming experience.
 
+https://github.com/christalind03/JETRIS-Rehydrated/assets/97999032/d8ee60cc-b084-4292-8428-12d156a92d5c
+
 # Downloading the Executable
 To download the executable file of Jetris: Rehydrated, follow these steps:
 
